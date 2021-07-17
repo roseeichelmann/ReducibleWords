@@ -1,0 +1,155 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;\f1\fmodern\fcharset0 Courier;}
+{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}
+{\*\expandedcolortbl;;\cssrgb\c0\c0\c0;}
+\margl1440\margr1440\vieww15800\viewh12180\viewkind0
+\deftab720
+\pard\pardeftab720\sa240\partightenfactor0
+
+\f0\fs24 \cf2 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf2 import sys\
+\
+# Input: takes as input a positive integer n\
+# Output: returns True if n is prime and False otherwise\
+def is_prime ( n ):\
+  if (n == 1):\
+    return False\
+\
+  limit = int (n ** 0.5) + 1\
+  div = 2\
+  while (div < limit):\
+    if (n % div == 0):\
+      return False\
+    div += 1\
+  return True\
+\
+# Input: takes as input a string in lower case and the size\
+#        of the hash table \
+# Output: returns the index the string will hash into\
+def hash_word (s, size):\
+  hash_idx = 0\
+  for j in range (len(s)):\
+    letter = ord (s[j]) - 96\
+	hash_idx = (hash_idx * 26 + letter) % size\
+  return hash_idx\
+\
+# Input: takes as input a string in lower case and the constant\
+#        for double hashing \
+# Output: returns the step size for that string \
+def step_size (s, const):\
+  key = 0\
+  for j in range (len(s) - 1, -1, -1):\
+\pard\pardeftab720\partightenfactor0
+\cf2     letter = ord (s[j]) - 96\
+    key += pow26 * letter\
+    pow26 *= 26\
+\pard\pardeftab720\partightenfactor0
+\cf2   steps = const - ( key % const )\
+  return steps\
+\outl0\strokewidth0 \
+\outl0\strokewidth0 	\
+# Input: takes as input a string and a hash table \
+# Output: no output; the function enters the string in the hash table, \
+#         it resolves collisions by double hashing\
+def insert_word (s, hash_table):\
+  size = len(hash_table)\
+  index = hash_word(s, size)\
+  steps = step_size(s, const)\
+  while hash_table[index] not != \'91\'92:\
+    index = (index + steps) % size\
+  hash_table[index] = s\
+\
+\
+# Input: takes as input a string and a hash table \
+# Output: returns True if the string is in the hash table \
+#         and False otherwise\
+def find_word (s, hash_table):\
+\
+\
+\
+\
+# Input: string s, a hash table, and a hash_memo \
+#        recursively finds if the string is reducible\
+# Output: if the string is reducible it enters it into the hash memo \
+#         and returns True and False otherwise\
+def is_reducible (s, hash_table, hash_memo):\
+  if len(s) == 1:\
+    return s == \'91a\'92 or s == \'91o\'92 or s == \'91i\'92\
+  else:\
+    for letter in range(len(s):\
+      new_word = s[:letter] + s[letter + 1:]\
+      if find_word(new_word, hash_memo):\
+        return True\
+      if find_word(new_word, hash_table):\
+        is_reducible(new_word, hash_table, hash_memo)\
+\
+\
+# Input: string_list a list of words\
+# Output: returns a list of words that have the maximum length\
+def get_longest_words (string_list):\
+\
+def main():\
+  # create an empty word_list\
+  word_list = []\
+\
+  # read words from words.txt and append to word_list\
+  for line in sys.stdin:\
+    line = line.strip()\
+    word_list.append (line)\
+\
+  # find length of word_list\
+  n = len(word_list)\
+\
+  # determine prime number N that is greater than twice\
+  # the length of the word_list\
+  N = n * 2 + 1\
+  while not is_prime(N):\
+	N += 1\
+\
+  # create an empty hash_list\
+  hash_list = []\
+\
+  # populate the hash_list with N blank strings\
+  hash_list = [\'91\'92] * N\
+\
+  # hash each word in word_list into hash_list\
+  # for collisions use double hashing \
+  for word in word_list:\
+    insert_word(word, hash_list)\
+\
+  # create an empty hash_memo of size M\
+  # we do not know a priori how many words will be reducible\
+  # let us assume it is 10 percent (fairly safe) of the words\
+  # then M is a prime number that is slightly greater than \
+  # 0.2 * size of word_list\
+  M = (0.2 * n) + 1\
+  while not is_prime(M):\
+    M += 1\
+  hash_memo = [\'91\'92] * M\
+\
+  # populate the hash_memo with M blank strings\
+\
+  # create an empty list reducible_words\
+  reducible_words = []\
+\
+  # for each word in the word_list recursively determine\
+  # if it is reducible, if it is, add it to reducible_words\
+  # as you recursively remove one letter at a time check\
+  # first if the sub-word exists in the hash_memo. if it does\
+  # then the word is reducible and you do not have to test\
+  # any further. add the word to the hash_memo.\
+  for word in word_list:\
+    if is_reducible(word, hash_table, hash_memo):\
+      reducible_words.append(word)\
+\
+  # find the largest reducible words in reducible_words\
+\
+  # print the reducible words in alphabetical order\
+  # one word per line\
+\
+if __name__ == "__main__":\
+  main()\
+}
